@@ -4,6 +4,9 @@
     <layoutAssignments>
         <layout>Contact-Contact Layout CRM Eventos</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Account Layout CRM Eventos</layout>
+    </layoutAssignments>
     <userLicense>Salesforce</userLicense>
     <userPermissions>
         <enabled>true</enabled>
