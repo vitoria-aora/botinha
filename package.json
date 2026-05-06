@@ -12,6 +12,11 @@
     "test:unit:coverage": "sfdx-lwc-jest --coverage",
     "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
     "prettier:verify": "prettier --check \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+    "org:open": "sf org open",
+    "sf:retrieve": "sf project retrieve start --manifest manifest/package.xml",
+    "sf:deploy": "sf project deploy start --source-dir force-app",
+    "sf:deploy:check": "sf project deploy validate --source-dir force-app --test-level RunLocalTests",
+    "sf:test:apex": "sf apex run test --test-level RunLocalTests",
     "prepare": "husky || true",
     "precommit": "lint-staged"
   },
