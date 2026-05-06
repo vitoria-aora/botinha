@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <errorConditionFormula>NOT(OR(INCLUDES(Tipos_de_Conta__c, "Patrocinador"),
+        INCLUDES(Tipos_de_Conta__c, "Fornecedor"), INCLUDES(Tipos_de_Conta__c, "Órgão Público"),
+        INCLUDES(Tipos_de_Conta__c, "Cliente")))</errorConditionFormula>
+    <errorMessage>Selecione ao menos um tipo: Patrocinador, Fornecedor, Órgão Público ou Cliente.</errorMessage>
+    <fullName>Tipos_de_Conta_Required</fullName>
+</ValidationRule>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Indicador_IE__c</fullName>
+    <label>Indicador IE</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>false</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <default>false</default>
+                <fullName>Contribuinte</fullName>
+                <label>Contribuinte</label>
+            </value>
+            <value>
+                <default>false</default>
+                <fullName>Isento</fullName>
+                <label>Isento</label>
+            </value>
+            <value>
+                <default>true</default>
+                <fullName>Não Contribuinte</fullName>
+                <label>Não Contribuinte</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
