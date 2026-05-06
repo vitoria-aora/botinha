@@ -1,101 +1,54 @@
-# Botinha - Salesforce DX (Sandbox)
+# Botinha - Salesforce DX
 
-Projeto Salesforce configurado para desenvolvimento com sandbox.
+## Ambiente
 
-## Ambiente Atual
+| Item         | Valor                                                                |
+| ------------ | -------------------------------------------------------------------- |
+| Alias da org | `botinha-sbx`                                                        |
+| Sandbox      | https://newstageentretenimento--aoradev.sandbox.lightning.force.com/ |
+| Repositorio  | https://github.com/vitoria-aora/botinha.git                          |
+| Modo         | `developer` (PRs direto para `main`)                                 |
 
-- Projeto local: `C:\Users\vitoria\Projects\salesforce\botinha`
-- Repositorio remoto: `https://github.com/vitoria-aora/botinha.git`
-- Org padrao local (target-org): `botinha-sbx`
-- URL da sandbox: `https://newstageentretenimento--aoradev.sandbox.lightning.force.com/`
-
-## Setup Rapido
-
-1. Instale dependencias:
-
-   ```bash
-   npm install
-   ```
-
-2. Confirme org padrao:
-
-   ```bash
-   sf config get target-org
-   sf org list
-   ```
-
-3. Abra a org:
-
-   ```bash
-   sf org open
-   ```
-
-## Fluxo de Trabalho (Sandbox First)
-
-1. Atualize a branch principal local:
-
-   ```bash
-   git checkout main
-   git pull origin main
-   ```
-
-2. Crie uma branch de feature:
-
-   ```bash
-   git checkout -b feature/nome-da-feature
-   ```
-
-3. Traga metadados da sandbox (quando necessario):
-
-   ```bash
-   sf project retrieve start --manifest manifest/package.xml
-   ```
-
-4. Implemente mudancas no `force-app`.
-
-5. Faça deploy para sandbox:
-
-   ```bash
-   sf project deploy start --source-dir force-app
-   ```
-
-6. Rode testes Apex (recomendado antes de subir PR):
-
-   ```bash
-   sf apex run test --test-level RunLocalTests
-   ```
-
-7. Commit e push:
-
-   ```bash
-   git add .
-   git commit -m "feat: descricao da entrega"
-   git push -u origin feature/nome-da-feature
-   ```
-
-8. Abra Pull Request para `main`.
-
-## Comandos NPM uteis
-
-Veja os scripts no `package.json` para comandos rapidos de org, retrieve, deploy e validacao.
+## Setup inicial
 
 ```bash
-npm run org:open
-npm run sf:retrieve
-npm run sf:deploy
-npm run sf:deploy:check
-npm run sf:test:apex
+npm install
+sf org open        # confirma acesso à sandbox
 ```
 
-## Boas Praticas
+## Fluxo por feature (cada chat = uma feature)
 
-- Sempre trabalhar em branch de feature.
-- Evitar deploy de tudo sem necessidade em ambientes compartilhados.
-- Priorizar deploy seletivo quando estiver com mais de um time atuando na mesma sandbox.
-- Rodar testes locais antes de abrir PR.
-- Manter `manifest/package.xml` atualizado para facilitar retrieve/deploy por escopo.
+O Claude segue o lifecycle definido em `_shared/docs/FEATURE_LIFECYCLE.md`:
+
+1. Claude pergunta o nome do chat no inicio de cada conversa.
+2. Nome informado → branch git `<slug>` + pasta `branches/<slug>/package.xml` criados automaticamente.
+3. Toda metadata criada/editada e adicionada ao `branches/<slug>/package.xml` incrementalmente.
+4. Ao final da feature: `/sf-feature-close` — deleta branch local/remota e limpa a pasta.
+
+`branches/` e `.active-feature` sao gitignored; nao commitar.
+
+## Comandos NPM
+
+```bash
+npm run org:open          # abre a sandbox no browser
+npm run sf:retrieve       # retrieve via manifest/package.xml
+npm run sf:deploy         # deploy de force-app para a sandbox
+npm run sf:deploy:check   # validacao sem deploy (RunLocalTests)
+npm run sf:test:apex      # executa testes Apex locais
+```
+
+## Slash commands disponiveis
+
+| Comando             | Acao                                              |
+| ------------------- | ------------------------------------------------- |
+| `/sf-deploy`        | validate + deploy para `botinha-sbx`              |
+| `/sf-retrieve`      | retrieve de metadata (`/sf-retrieve ApexClass:X`) |
+| `/sf-test`          | testes Apex afetados pelo diff                    |
+| `/sf-scan`          | Code Analyzer nos arquivos do diff                |
+| `/sf-pr`            | abre PR para `main` com resumo                    |
+| `/sf-feature-close` | encerra feature ativa (checa PR, limpa branch)    |
 
 ## Referencias
 
 - [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
+- [Feature Lifecycle](../salesforce/_shared/docs/FEATURE_LIFECYCLE.md)
