@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Patrocinadores</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>Tipo_de_Pessoa__c</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>CORE.USERS.FIRST_NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Tipos_de_Conta__c</field>
+        <operation>includes</operation>
+        <value>Patrocinador</value>
+    </filters>
+    <label>Patrocinadores</label>
+</ListView>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Compact_CRM_Eventos</fullName>
+    <fields>Name</fields>
+    <fields>Tipo_de_Pessoa__c</fields>
+    <fields>CPF_CNPJ__c</fields>
+    <fields>Phone</fields>
+    <fields>OwnerId</fields>
+    <label>Account Compact CRM Eventos</label>
+</CompactLayout>

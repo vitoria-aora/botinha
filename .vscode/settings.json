@@ -4,5 +4,13 @@
     "**/bower_components": true,
     "**/.sf": true,
     "**/.sfdx": true
-  }
+  },
+  "xml.preferences.showSchemaDocumentationType": "none",
+  "xml.fileAssociations": [],
+  "xml.validation.filters": [
+    {
+      "pattern": "**/*-meta.xml",
+      "enabled": false
+    }
+  ]
 }

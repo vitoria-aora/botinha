@@ -3,6 +3,15 @@
 #
 
 **/staticresources/**
+**/contentassets/**
+**/applications/**
+**/flexipages/**
+**/layouts/**
+**/objects/**
+**/permissionsets/**
+**/roles/**
+**/sharingRules/**
+**/tabs/**
 .localdevserver
 .sfdx
 .sf
