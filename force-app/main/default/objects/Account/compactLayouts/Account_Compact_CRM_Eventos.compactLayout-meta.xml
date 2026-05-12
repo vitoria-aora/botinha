@@ -4,7 +4,7 @@
     <fields>Name</fields>
     <fields>Tipo_de_Pessoa__c</fields>
     <fields>CPF_CNPJ__c</fields>
-    <fields>Phone</fields>
+    <fields>Phone_disp__c</fields>
     <fields>OwnerId</fields>
     <label>Account Compact CRM Eventos</label>
 </CompactLayout>

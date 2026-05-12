@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OtherPhone_disp__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISBLANK(OtherPhone), "", HYPERLINK("tel:" &amp; OtherPhone, IF(LEFT(OtherPhone, 3) = "+55", IF(LEN(OtherPhone) = 14, "+55 (" &amp; MID(OtherPhone, 4, 2) &amp; ") " &amp; MID(OtherPhone, 6, 5) &amp; "-" &amp; MID(OtherPhone, 11, 4), IF(LEN(OtherPhone) = 13, "+55 (" &amp; MID(OtherPhone, 4, 2) &amp; ") " &amp; MID(OtherPhone, 6, 4) &amp; "-" &amp; MID(OtherPhone, 10, 4), OtherPhone)), OtherPhone)) &amp; " " &amp; HYPERLINK("https://wa.me/" &amp; SUBSTITUTE(OtherPhone, "+", ""), IMAGE("/resource/WhatsAppIcon", "WhatsApp", 20, 20)))</formula>
+    <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+    <label>Outro Telefone (exibição)</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

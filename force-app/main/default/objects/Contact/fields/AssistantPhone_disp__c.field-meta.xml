@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AssistantPhone_disp__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISBLANK(AssistantPhone), "", HYPERLINK("tel:" &amp; AssistantPhone, IF(LEFT(AssistantPhone, 3) = "+55", IF(LEN(AssistantPhone) = 14, "+55 (" &amp; MID(AssistantPhone, 4, 2) &amp; ") " &amp; MID(AssistantPhone, 6, 5) &amp; "-" &amp; MID(AssistantPhone, 11, 4), IF(LEN(AssistantPhone) = 13, "+55 (" &amp; MID(AssistantPhone, 4, 2) &amp; ") " &amp; MID(AssistantPhone, 6, 4) &amp; "-" &amp; MID(AssistantPhone, 10, 4), AssistantPhone)), AssistantPhone)) &amp; " " &amp; HYPERLINK("https://wa.me/" &amp; SUBSTITUTE(AssistantPhone, "+", ""), IMAGE("/resource/WhatsAppIcon", "WhatsApp", 20, 20)))</formula>
+    <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+    <label>Telefone do Assistente (exibição)</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HomePhone_disp__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISBLANK(HomePhone), "", HYPERLINK("tel:" &amp; HomePhone, IF(LEFT(HomePhone, 3) = "+55", IF(LEN(HomePhone) = 14, "+55 (" &amp; MID(HomePhone, 4, 2) &amp; ") " &amp; MID(HomePhone, 6, 5) &amp; "-" &amp; MID(HomePhone, 11, 4), IF(LEN(HomePhone) = 13, "+55 (" &amp; MID(HomePhone, 4, 2) &amp; ") " &amp; MID(HomePhone, 6, 4) &amp; "-" &amp; MID(HomePhone, 10, 4), HomePhone)), HomePhone)) &amp; " " &amp; HYPERLINK("https://wa.me/" &amp; SUBSTITUTE(HomePhone, "+", ""), IMAGE("/resource/WhatsAppIcon", "WhatsApp", 20, 20)))</formula>
+    <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+    <label>Telefone Residencial (exibição)</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
