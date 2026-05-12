@@ -12,10 +12,15 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
 
   protected override void beforeInsert() {
     standardizePhones((List<Account>) Trigger.new, null);
+    standardizeCNPJ((List<Account>) Trigger.new, null);
   }
 
   protected override void beforeUpdate() {
     standardizePhones(
+      (List<Account>) Trigger.new,
+      (Map<Id, Account>) Trigger.oldMap
+    );
+    standardizeCNPJ(
       (List<Account>) Trigger.new,
       (Map<Id, Account>) Trigger.oldMap
     );
@@ -35,6 +40,29 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
         for (String fld : PERSON_PHONE_FIELDS) {
           normalizeField(a, oldRec, fld, ddd);
         }
+      }
+    }
+  }
+
+  private void standardizeCNPJ(List<Account> records, Map<Id, Account> oldMap) {
+    for (Account a : records) {
+      if (a.IsPersonAccount)
+        continue;
+      Account oldRec = oldMap == null ? null : oldMap.get(a.Id);
+      String newVal = a.CNPJ__c;
+      String oldVal = oldRec == null ? null : oldRec.CNPJ__c;
+      if (newVal == oldVal)
+        continue;
+      if (String.isBlank(newVal))
+        continue;
+
+      CNPJFormatter.Result r = CNPJFormatter.standardize(newVal);
+      if (!r.recognized) {
+        a.addError('CNPJ__c', r.errorMessage);
+        continue;
+      }
+      if (r.changed) {
+        a.CNPJ__c = r.value;
       }
     }
   }
