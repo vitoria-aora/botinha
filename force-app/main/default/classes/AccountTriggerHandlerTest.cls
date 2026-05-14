@@ -127,6 +127,118 @@ private class AccountTriggerHandlerTest {
   }
 
   @isTest
+  static void insert_normalizesMaskedCNPJ() {
+    PhoneStandardizerContext.setCachedDDD('21');
+    Account a = new Account(
+      Name = 'CNPJ Co',
+      CNPJ__c = '11.222.333/0001-81',
+      Tipos_de_Conta__c = 'Cliente'
+    );
+    insert a;
+    System.assertEquals(
+      '11222333000181',
+      [SELECT CNPJ__c FROM Account WHERE Id = :a.Id].CNPJ__c
+    );
+  }
+
+  @isTest
+  static void insert_cpfValueOnCNPJField_blocksDml() {
+    PhoneStandardizerContext.setCachedDDD('21');
+    Account a = new Account(
+      Name = 'CPF Pretender',
+      CNPJ__c = '123.456.789-01',
+      Tipos_de_Conta__c = 'Cliente'
+    );
+    try {
+      insert a;
+      System.assert(false, 'expected DmlException');
+    } catch (DmlException e) {
+      System.assert(
+        e.getMessage().contains('CPF'),
+        'expected CPF-specific message, got: ' + e.getMessage()
+      );
+    }
+  }
+
+  @isTest
+  static void insert_invalidDV_blocksDml() {
+    PhoneStandardizerContext.setCachedDDD('21');
+    Account a = new Account(
+      Name = 'CNPJ Errado',
+      CNPJ__c = '11222333000182',
+      Tipos_de_Conta__c = 'Cliente'
+    );
+    try {
+      insert a;
+      System.assert(false, 'expected DmlException');
+    } catch (DmlException e) {
+      System.assert(e.getMessage().contains('dígitos verificadores'));
+    }
+  }
+
+  @isTest
+  static void update_unchangedCNPJ_isNotRevisited() {
+    PhoneStandardizerContext.setCachedDDD('21');
+    Account a = new Account(
+      Name = 'CNPJ Co',
+      CNPJ__c = '11222333000181',
+      Tipos_de_Conta__c = 'Cliente'
+    );
+    insert a;
+    a.Name = 'CNPJ Co Renamed';
+    update a;
+    System.assertEquals(
+      '11222333000181',
+      [SELECT CNPJ__c FROM Account WHERE Id = :a.Id].CNPJ__c
+    );
+  }
+
+  @isTest
+  static void update_changedCNPJ_normalizes() {
+    PhoneStandardizerContext.setCachedDDD('21');
+    Account a = new Account(
+      Name = 'CNPJ Co',
+      CNPJ__c = '11222333000181',
+      Tipos_de_Conta__c = 'Cliente'
+    );
+    insert a;
+    a.CNPJ__c = '33.014.556/0001-96';
+    update a;
+    System.assertEquals(
+      '33014556000196',
+      [SELECT CNPJ__c FROM Account WHERE Id = :a.Id].CNPJ__c
+    );
+  }
+
+  @isTest
+  static void personAccount_cnpjValue_isSilentlyAccepted() {
+    List<RecordType> personRTs = [
+      SELECT Id
+      FROM RecordType
+      WHERE SObjectType = 'Account' AND IsPersonType = TRUE AND IsActive = TRUE
+      LIMIT 1
+    ];
+    if (personRTs.isEmpty())
+      return;
+
+    PhoneStandardizerContext.setCachedDDD('21');
+    Account pa = new Account(
+      FirstName = 'Joao',
+      LastName = 'Silva',
+      RecordTypeId = personRTs[0].Id,
+      CNPJ__c = 'abc',
+      Tipos_de_Conta__c = 'Cliente'
+    );
+    insert pa;
+
+    System.assertEquals(
+      'abc',
+      [SELECT CNPJ__c FROM Account WHERE Id = :pa.Id].CNPJ__c,
+      'PA fica fora do standardizer de CNPJ — valor passa intacto'
+    );
+  }
+
+  @isTest
   static void personAccount_normalizesPersonFields() {
     List<RecordType> personRTs = [
       SELECT Id

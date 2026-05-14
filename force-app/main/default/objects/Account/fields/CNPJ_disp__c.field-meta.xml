@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CNPJ_disp__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(OR(ISBLANK(CNPJ__c), LEN(CNPJ__c) &lt;&gt; 14), BLANKVALUE(CNPJ__c, ""), MID(CNPJ__c, 1, 2) &amp; "." &amp; MID(CNPJ__c, 3, 3) &amp; "." &amp; MID(CNPJ__c, 6, 3) &amp; "/" &amp; MID(CNPJ__c, 9, 4) &amp; "-" &amp; MID(CNPJ__c, 13, 2))</formula>
+    <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+    <label>CNPJ (exibição)</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
