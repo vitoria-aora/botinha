@@ -82,8 +82,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Nome_Fantasia__c</fieldItem>
-                <identifier>RecordNome_Fantasia_cField</identifier>
+                <fieldItem>Record.Razao_Social__c</fieldItem>
+                <identifier>RecordRazao_Social_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-cb982814-f968-413a-b127-a59fa06ca0f5</name>
